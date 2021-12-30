@@ -17,17 +17,19 @@
 
             <div class="card shadow">
                 <div class="card-header">
-                    <h4>Add Update</h4>
+                    <h4>Slider Update</h4>
                 </div>
 
                 <div class="card-body">
-                    <form action="{{route('store.slider')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{url('update/slider/'.$slider->id)}}" method="POST" enctype="multipart/form-data">
 
                         @csrf
 
+                        <input type="hidden" name="old_image" value="{{$slider->slider_image}}">
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">Small Title</label>
-                            <input type="text" class="form-control" placeholder="Small Title" name="small_title">
+                            <input type="text" class="form-control" placeholder="Small Title" name="small_title" value="{{$slider->small_title}}">
 
                             <span class='text-danger'>
                                 @error('small_title')
@@ -37,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Big Title</label>
-                            <input type="text" class="form-control" placeholder="Big title" name="big_title">
+                            <input type="text" class="form-control" placeholder="Big title" name="big_title" value="{{$slider->big_title}}">
 
                             <span class='text-danger'>
                                 @error('big_title')
@@ -47,7 +49,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>
-                            <textarea name="description" class="form-control"></textarea>
+                            <textarea name="description" class="form-control">{{$slider->description}} </textarea>
                             <span class='text-danger'>
                                 @error('description')
                                     {{$message}}
@@ -58,6 +60,9 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slider Image</label>
                             <input type="file" class="form-control" name="slider_image">
+
+                            <img src="{{asset($slider->slider_image)}}" width="150px" alt="" class="img-thumbnail">
+
                             <span class='text-danger'>
                                 @error('slider_image')
                                     {{$message}}
@@ -65,7 +70,7 @@
                             </span>
                         </div>
 
-                        <button type="submit" class="btn btn-success">Add Slider</button>
+                        <button type="submit" class="btn btn-warning">Update Slider</button>
                     </form>
                 </div>
             </div>

@@ -5,6 +5,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{session('success')}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @endif
+
             <div class="card shadow">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
@@ -40,8 +50,8 @@
                                 <td>{{$slide->description}}</td>
                                 <td><img style="width: 120px" src="{{asset($slide->slider_image)}}" alt=""></td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-success">Edit</a>
-                                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="{{url('edit/slider/'.$slide->id)}}" class="btn btn-sm btn-success">Edit</a>
+                                    <a href="{{url('delete/slider/'.$slide->id)}}" onclick="return confirm('Are you sure to delete !')" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

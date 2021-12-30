@@ -72,5 +72,57 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Slider Added Successfully');
     }
 
+    public function editSlider($id){
+        $slider = Slider::find($id);
+        return view('admin.slider.edit_slider', compact('slider'));
+    }
+
+    public function updateSlider(Request $request, $id){
+        $validated = $request->validate([
+            'small_title' => 'required',
+            'big_title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $old_image = $request->old_image;
+
+        $slider_image = $request->file('slider_image');
+
+        if ($slider_image) {
+            $name_gen = hexdec(uniqid()) . '.' . $slider_image->getClientOriginalExtension();
+            Image::make($slider_image)->resize(1366, 800)->save('images/slider/' . $name_gen);
+
+            $final_image = 'images/slider/' . $name_gen;
+
+            unlink($old_image);
+
+            $slider = Slider::find($id);
+            $slider->small_title = $request->small_title;
+            $slider->big_title = $request->big_title;
+            $slider->description = $request->description;
+            $slider->slider_image = $final_image;
+            $slider->save();
+
+            return redirect()->back()->with('success', 'Slider Updated Successfully');
+        }else {
+            $slider = Slider::find($id);
+            $slider->small_title = $request->small_title;
+            $slider->big_title = $request->big_title;
+            $slider->description = $request->description;
+            $slider->save();
+
+            return redirect()->back()->with('success', 'Slider Updated Successfully');
+        }
+    }
+
+    public function deleteSlider($id){
+        $image = Slider::find($id);
+        $old_image = $image->slider_image;
+        unlink($old_image);
+
+        $delete = Slider::find($id)->delete();
+        return redirect()->back()->with('success', 'Slider Delete Successfully');
+    }
+
     //slider section end
 }

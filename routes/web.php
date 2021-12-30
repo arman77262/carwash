@@ -24,3 +24,6 @@ Route::post('update/header/{id}', [AdminController::class, 'updateHeader']);
 Route::get('slider/options/', [AdminController::class, 'allSlider'])->name('slider');
 Route::get('add/Slider', [AdminController::class, 'addSlider'])->name('add.slider');
 Route::post('store/slider', [AdminController::class, 'storeSlider'])->name('store.slider');
+Route::get('edit/slider/{id}', [AdminController::class, 'editSlider']);
+Route::post('update/slider/{id}', [AdminController::class, 'updateSlider']);
+Route::get('delete/slider/{id}', [AdminController::class, 'deleteSlider']);
